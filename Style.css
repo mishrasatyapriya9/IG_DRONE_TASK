@@ -1,3 +1,11 @@
+:root {
+  --color-primary: #7547ff; /* Replace with your primary color */
+  --color-ui-2: #ffffff32; /* Replace with your secondary UI color */
+  --border-radius-3: 10px;
+  --transition: 0.3s ease-in-out;
+  --color-text: #333333; /* Replace with your text color */
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -11,6 +19,55 @@ body {
   overflow-x: hidden;
   overflow-y: scroll; /* Ensure scrolling if content overflows */
   animation: fadeIn 1s ease-in-out; /* Page load animation */
+}
+.details-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius-3);
+  padding: 20px;
+  color: var(--color-text);
+  isolation: isolate;
+  background: var(--color-ui-2);
+  /* Add this line to animate the border */
+  border: 2px solid var(--color-primary);
+}
+
+.details-box::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: conic-gradient(
+    var(--color-primary),
+    transparent 60deg,
+    transparent 180deg,
+    var(--color-primary),
+    transparent 240deg
+  );
+  inset: -50%;
+  z-index: -2;
+  animation: spin 9s linear infinite;
+  animation-play-state: paused;
+}
+
+.details-box:hover::before {
+  animation-play-state: running;
+}
+
+.details-box::after {
+  content: "";
+  position: absolute;
+  inset: 0.25rem;
+  border-radius: calc(1.2rem - 0.25rem);
+  background: var(--color-ui-2);
+  z-index: -1;
+  transition: var(--transition);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 /* Navbar Styles */
@@ -38,9 +95,11 @@ body {
 }
 
 .navbar-title {
-  font-size: 24px;
+    font-family: Cinzel;
+
+  font-size: 28px;
   font-weight: bold;
-  color: #007bff;
+  color: black;
   margin: 0;
   transition: opacity 0.5s ease, transform 0.5s ease;
   animation: fadeInUp 1s ease-out; /* Animation for details box */
@@ -73,10 +132,12 @@ body {
   margin: 0 auto;
   position: relative;
   text-align: center;
+  font-family: Inter;
 }
 
 /* Details Box */
 .details-box {
+    font-family: Inter;
   color: black;
   background: rgba(255, 255, 255, 0.272);
   backdrop-filter: blur(5px);
@@ -95,14 +156,32 @@ body {
 
 /* Details Box Image */
 .details-box img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   margin-right: 20px;
   transition: opacity 0.5s ease, transform 0.5s ease;
   animation: fadeInUp 1s ease-out; /* Animation for details box */
 }
-
+.details-box img:hover {
+  width: 155px; /* Increase the size */
+  height: 155px; /* Increase the size */
+  border-radius: 50%;
+  margin-right: 20px;
+  transition: opacity 0.5s ease, transform 0.5s ease, width 0.5s ease, height 0.5s ease;
+  transform: scale(1.1); /* Scale up the image */
+  animation: fadeInUpImg 1s ease-in-out; /* Existing fadeInUp animation */
+}
+@keyframes fadeInUpImg {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* Details Content */
 .details-content {
   max-width: 400px;
